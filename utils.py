@@ -1,6 +1,6 @@
 import torch 
 import torch.nn as nn
-from peft import LoraConfig, get_peft_model
+from peft import LoraConfig, get_peft_model, TaskType
 from transformers import AutoTokenizer, AutoConfig, AutoModelForSeq2SeqLM
 
 class CastOutputToFloat(nn.Sequential):
@@ -37,7 +37,8 @@ def get_flanT5_peft(
     target_modules=["q", "v"],
     lora_dropout=lora_dropout,
     bias="none",
-    task_type="CAUSAL_LM")
+    task_type=TaskType.SEQ_2_SEQ_LM)
+    
 
     model = get_peft_model(model, config)
     return model,tokenizer
