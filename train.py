@@ -5,7 +5,7 @@ def single_epoch_train(
     model, 
     train_loader, 
     optimizer, 
-    acclerator=False,
+    accelerator=False,
     scheduler=False, 
     accumulation_step=4,
     device="cuda"
