@@ -1,6 +1,7 @@
 import torch 
 import torch.nn as nn
 from peft import LoraConfig, get_peft_model, TaskType
+from peft import PeftModel, PeftConfig
 from transformers import AutoTokenizer, AutoConfig, AutoModelForSeq2SeqLM
 
 class CastOutputToFloat(nn.Sequential):
