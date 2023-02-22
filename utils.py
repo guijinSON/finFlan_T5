@@ -1,6 +1,7 @@
 import torch 
 import torch.nn as nn
 from peft import LoraConfig, get_peft_model
+from transformers import AutoTokenizer, AutoConfig, AutoModelForSeq2SeqLM
 
 class CastOutputToFloat(nn.Sequential):
     def forward(self, x): 
@@ -15,7 +16,7 @@ def get_flanT5_peft(
     load_in_8bit=True,
     lora_r = 16):
     model = AutoModelForSeq2SeqLM.from_pretrained(model_ckpt, load_in_8bit=load_in_8bit, device_map='auto') # load 8-bit flan-t5 model
-    tokenizer = AutoTokenizer.from_pretrained("google/flan-t5-xxl")
+    tokenizer = AutoTokenizer.from_pretrained(model_ckpt)
 
     for param in model.parameters():
         param.requires_grad = False  # freeze the model - train adapters later
