@@ -14,7 +14,11 @@ def make_inputs_require_grad(module, input, output):
 def get_flanT5_peft(
     model_ckpt="google/flan-t5-xxl", 
     load_in_8bit=True,
-    lora_r = 16):
+    lora_r = 16,
+    lora_alpha = 32,
+    lora_dropout = 0.05
+    ):
+    
     model = AutoModelForSeq2SeqLM.from_pretrained(model_ckpt, load_in_8bit=load_in_8bit, device_map='auto') # load 8-bit flan-t5 model
     tokenizer = AutoTokenizer.from_pretrained(model_ckpt)
 
@@ -29,9 +33,9 @@ def get_flanT5_peft(
 
     config = LoraConfig(
     r=lora_r,
-    lora_alpha=32,
+    lora_alpha=lora_alpha,
     target_modules=["q", "v"],
-    lora_dropout=0.05,
+    lora_dropout=lora_dropout,
     bias="none",
     task_type="CAUSAL_LM")
 
