@@ -23,7 +23,7 @@ def get_flanT5_peft(
     model = AutoModelForSeq2SeqLM.from_pretrained(model_ckpt, load_in_8bit=load_in_8bit, device_map='auto') # load 8-bit flan-t5 model
     tokenizer = AutoTokenizer.from_pretrained(model_ckpt)
 
-    for param in model.named_parameters():
+    for name, param in model.named_parameters():
         param.requires_grad = False  # freeze the model - train adapters later
         if param.ndim == 1 and "layer_norm" in name:# cast the small parameters (e.g. layernorm) to fp32 for stability
             param.data = param.data.to(torch.float16)
@@ -53,7 +53,7 @@ def get_flanT5_peft_saved(
     model = AutoModelForSeq2SeqLM.from_pretrained(model_ckpt, load_in_8bit=load_in_8bit, device_map='auto') # load 8-bit flan-t5 model
     tokenizer = AutoTokenizer.from_pretrained(model_ckpt)
 
-    for param in model.named_parameters():
+    for name, param in model.named_parameters():
         param.requires_grad = False  # freeze the model - train adapters later
         if param.ndim == 1 and "layer_norm" in name:# cast the small parameters (e.g. layernorm) to fp32 for stability
             param.data = param.data.to(torch.float16)
