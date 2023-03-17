@@ -1,5 +1,6 @@
 import wandb 
 import torch
+from tqdm import tqdm
 
 def single_epoch_train(
     model, 
@@ -12,7 +13,7 @@ def single_epoch_train(
     ):
 
     total_loss = 0.0
-    for idx,batch in enumerate(train_loader):
+    for idx,batch in tqdm(enumerate(train_loader)):
 
         src_input_ids, src_attention_mask, tgt_input_ids, tgt_attention_mask = (
             batch['src_input_ids'].to(device),
