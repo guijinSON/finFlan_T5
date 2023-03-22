@@ -66,7 +66,7 @@ def single_epoch_test(
             decoder_attention_mask = tgt_attention_mask
         )
 
-        loss = outputs.loss / accumulation_step
+        loss = outputs.loss
         total_loss += loss.detach().float()
 
     test_epoch_loss = total_loss / len(test_loader)
